@@ -21,7 +21,14 @@ COLOR_YELLOW = "\033[1;33m"
 COLOR_OFF = "\033[0;0m"
 
 
-class DynamicMenu:
+class Scheduled:
+    """
+    https://pravash-techie.medium.com/python-sched-for-automating-tasks-in-python-396618864658
+    """
+    pass
+
+
+class DynamicMenu(Scheduled):
     """
     Клас для реалізації динамічного меню для будь яких класів, що наслідують цей клас.(<DynamicMenu>)
     Зручно перезавантажувати методи цього (Базового) класу у дочірніх класах що нослідують клас <DynamicMenu>, або
@@ -48,13 +55,10 @@ class DynamicMenu:
 
     """
 
-    def dynamic_menu_method_d(self, menu_id: int = 1, menu_option: str = 'd'):
-        pass
-
     def dynamic_menu_method_0(self, menu_id: int = 1, menu_option: str = '0'):
         pass
 
-    def dynamic_menu_method_1(self, menu_id: int = 1, menu_option: str = '1'):
+    def dynamic_menu_method_1(self, menu_id: int = 0, menu_option: str = '1'):
         pass
 
     def dynamic_menu_method_2(self, menu_id: int = 1, menu_option: str = '2'):
@@ -114,16 +118,22 @@ class DynamicMenu:
         :param item: integer
         :return: shows dynamic menu inside loop_dmenu() method
         """
-        if item == -1:
-            clear()
+        # if item == -1:
+        #     clear()
         title_item = len([k for k, _ in menu_items.items() if k < 0])
-        last_item = len([k for k, _ in menu_items.items() if k >= 0]) - title_item + 1
+        if title_item == 0:
+            if item < 0:
+                item += 1
+        last_item = len([k for k, _ in menu_items.items() if k >= 0])
         if item <= len(menu_items):
             if item == last_item:
-                print(f"{COLOR_YELLOW}{last_item}: {COLOR['red']} Вихід{COLOR_OFF}")
+                print(f"{COLOR_YELLOW}{last_item}: {COLOR['red']} Вихід з програми (#9#){COLOR_OFF}")
                 pass
             else:
-                if item < 0:
+                curr_item = self.preprint(menu_items[item])
+                if item <= 0:
+                    curr_item
+                    print()
                     print(f"{menu_items[item]}")
                 else:
                     print(f"{COLOR_YELLOW}{item}: {COLOR_OFF} {menu_items[item]}")
@@ -132,28 +142,31 @@ class DynamicMenu:
                 else:
                     pass
 
-    def dynamic_menu_method(self, menu_id: int = 1, menu_option: str = 'd'):
-        if menu_id == int(0) and menu_option == 'main_linkedlist_menu':
+    def mia_pizza_pronta(self, *args, **kwargs):
+        if kwargs['menu_id'] == int(0) and kwargs['menu_option'] == 'main_app_menu':
             m_items = {
-                -1: f"Тип об'єкту: {self.__class__.__CLASS__} {type(self)}",
-                # 0: 'Виконувати в 1 одно-звязному списку( 1(head)->2->None(next))'
-                0: f'{COLOR["cyan"]}Перемкнути на 2 дво-звязний список None(prev)<-1(head)<->(prev)2(next)<->3(tail)->None(next){COLOR["blue"]}',
-                1: f'{COLOR["green"]}Додати нове число до списку{COLOR_OFF}',
-                # (якщо таке число існує у списку, потрібно вивести повідомлення про
-                # це користувачеві без додавання числа).
-                2: f'{COLOR['red']}Видалити усi входження числа зi списку{COLOR_OFF}',
-                # (користувач вводить з клавiатyри число для видалення).
-                3: f'{COLOR["blue"]}Показати вмiст списку{COLOR_OFF}',
-                # (залежно вiд выборy користyвача, показать список з початкy або з кiнця)
-                4: f'{COLOR["blue"]}Перевiрити, чи є значення y спискy.{COLOR_OFF}',
-                5: f'{COLOR_YELLOW}Замiнити значення y спискy{COLOR_OFF}',
-                # (користyвач вызначає, чи замiнити тільки перше входження, чи всі).
+                -1: f"Тип об'єкту: {self.__class__.__name__}",
+                0: f'{COLOR["cyan"]}Кафе "La mia pizza - PRONTA!"{COLOR_OFF}',
+                1: f'{COLOR["green"]}Наше меню{COLOR_OFF}',
+                2: f'{COLOR["green"]}Ваші замовлення / Зробити замовлення{COLOR_OFF}',
+                3: f'{COLOR["green"]}готові(_)\n'
+                   f'{COLOR_YELLOW}робимо(_)\n'
+                   f'{COLOR["green"]}оплачені(_)\n'
+                   f'{COLOR["red"]}відмінені(_)\n'
+                   f'{COLOR["red"]}виконані(_)\n',
+                #     f'{COLOR["green"]}готові',
+                #     f'{COLOR_YELLOW}робимо',
+                #     f'{COLOR["green"]}оплачені',
+                #     f'{COLOR["red"]}відмінені',
+                #     f'{COLOR["red"]}виконані',
+                # ],
+                4: f'{COLOR_YELLOW}Log_in / Register{COLOR_OFF}',
             }
             self.loop_dmenu(m_items, -1)  # self.show_dmenu(m_items, -1)
             return
 
     def get_method(self, *args, **kwargs):
-        method_name = 'dynamic_menu_method_d'  # (self, menu_id: int = 1, menu_option: str = 'd')
+        method_name = 'mia_pizza_pronta'
         args = args or []
         if len(args) > 0:
             method_name = list(args).pop()
@@ -166,4 +179,4 @@ class DynamicMenu:
         if 'method_params' in kwargs:
             pass
         method = getattr(self, method_name)
-        return method(**method_params)  # method(self)
+        return method(**method_params)

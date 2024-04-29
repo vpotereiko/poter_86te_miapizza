@@ -17,8 +17,13 @@
    Потрібно створити:
    1. Модуль для керування меню
 
-    class DynamicMenu :
+    class Scheduled :
+    - опис прикладу реалізації 
+	https://pravash-techie.medium.com/python-sched-for-automating-tasks-in-python-396618864658
+	
+	class DynamicMenu(Scheduled) :
     - опис класу 
+	https://pravash-techie.medium.com/python-sched-for-automating-tasks-in-python-396618864658
 
 	class FileDB :
     - опис класу

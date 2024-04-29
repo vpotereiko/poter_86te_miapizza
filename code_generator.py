@@ -4,6 +4,7 @@ from datetime import datetime
 class CodeGenerator:
     __counter = 0
     __items = []
+
     # @property
     # def valid_keys(self):
     #     keys = []
@@ -21,7 +22,7 @@ class CodeGenerator:
     # def get_date_fromtimestamp(ts_str):
     #     ts = int(ts_str)
     #     date_obj = datetime.fromtimestamp(ts)
-    #     return date_obj
+    #     return str(date_obj)
     def __new__(cls):
         cls.__counter += 1
         dt = datetime.now()
@@ -34,4 +35,3 @@ class CodeGenerator:
 
     def __str__(self):
         return str(self.__id)
-
