@@ -127,16 +127,16 @@ class DynamicMenu(Scheduled):
         last_item = len([k for k, _ in menu_items.items() if k >= 0])
         if item <= len(menu_items):
             if item == last_item:
-                print(f"{COLOR_YELLOW}{last_item}: {COLOR['red']} Вихід з програми (#9#){COLOR_OFF}")
+                print(f"{COLOR_YELLOW}{last_item}: {COLOR['red']} Вихід з програми {self.preprint('(#9#)')}{COLOR_OFF}")
                 pass
             else:
                 curr_item = self.preprint(menu_items[item])
                 if item <= 0:
-                    curr_item
                     print()
-                    print(f"{menu_items[item]}")
+                    print(f"{self.preprint(menu_items[item])}")
                 else:
-                    print(f"{COLOR_YELLOW}{item}: {COLOR_OFF} {menu_items[item]}")
+                    print(f"{COLOR_YELLOW}{item}: {COLOR_OFF} "
+                          f"{self.preprint(menu_items[item])}")
                 if item < last_item:
                     return self.show_dmenu(menu_items, item + 1)
                 else:
