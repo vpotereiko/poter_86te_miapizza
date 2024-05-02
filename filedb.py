@@ -14,8 +14,7 @@ class FileDB:
     def __new__(cls, *args, **kwargs):
         if 'instance' in kwargs:
             cls._items.append(kwargs['instance'])
-        else:
-            return super().__new__(cls, *args, **kwargs)
+        return super().__new__(cls)
 
     def __init__(self, instance):
         self._items.append(instance)

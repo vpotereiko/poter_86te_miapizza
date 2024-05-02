@@ -2,6 +2,7 @@ import datetime
 
 from dmenu import DynamicMenu, COLOR, COLOR_OFF, COLOR_YELLOW
 from filedb import FileDB
+from food_menu import MenuItem
 
 
 def insert_curr_time(part1, part2):
@@ -17,7 +18,7 @@ def get_orders_key():
 
 
 class Account(DynamicMenu, FileDB):
-
+    _
     @staticmethod
     def preprint(m_value):
         first_hash_founded = m_value.find("#")
@@ -115,13 +116,13 @@ class User(Customer):
                 # ],
                 3: f'{COLOR_YELLOW}Log_in (#7#) / Register (#8#){COLOR_OFF}',
             }
-            self.loop_dmenu(m_items, -1)  # self.show_dmenu(m_items, -1)
+            self.loop_dmenu(m_items, -1, p1="add_new_food")  # self.show_dmenu(m_items, -1)
             return
 
-    def dynamic_menu_option_1(self, menu_id: int = 0, menu_option: str = '1'):
+    def dynamic_menu_option_1(self, *args, **kwargs):
         from food_menu import MenuItem
-        m = MenuItem(instance=self)
-        m.get_method()
+        m = MenuItem(instance=self, menu_item_name="Акційна страва")  # .get_method()
+        m.get_method('food_menu', menu_id=1, menu_option="food_menu")
 
     def get_method(self, *args, **kwargs):
         method_name = 'mia_pizza_pronta'

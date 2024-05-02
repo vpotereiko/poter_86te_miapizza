@@ -88,11 +88,19 @@ class DynamicMenu(Scheduled):
     def dynamic_menu_method_10(self, menu_id: int = 1, menu_option: str = '10'):
         pass
 
-    def loop_dmenu(self, menu_items, item):
+    # def loop_dmenu(self, menu_items, item, **kwargs):
+    def loop_dmenu(self, *args, **kwargs):
+        if len(args) == 2:
+            menu_items = args[0]
+            item = args[1]
+        else:
+            menu_items = kwargs['m_items']
+            item = kwargs['item']
         self.show_dmenu(menu_items, item)
         title_item = len([k for k, _ in menu_items.items() if k < 0])
         last_item = len([k for k, _ in menu_items.items() if k >= 0]) - title_item + 1
-        try:
+        # try:
+        if True:
             print(f"{COLOR['darkblue']}{'-' * 5 * len(menu_items)}{COLOR_OFF}")
             selected_item = int(input("Зробіть свій вибір"))
             print(f"{COLOR['darkblue']}{'-' * 5 * len(menu_items)}{COLOR_OFF}")
@@ -101,16 +109,22 @@ class DynamicMenu(Scheduled):
                 return self.loop_dmenu(menu_items, item)
             else:
                 if selected_item == last_item:
-                    exit(selected_item)
+                    return  # exit(selected_item)
                 else:
                     print(f"{COLOR['darkgreen']}{'-' * 5 * len(menu_items)}{COLOR_OFF}")
-                    method = getattr(self, 'dynamic_menu_option_' + str(selected_item))
-                    method()
+                    if not kwargs:
+                        method = getattr(self, 'dynamic_menu_option_' + str(selected_item))
+                        method(menu_items=menu_items, item=item)
+                    else:
+                        method = getattr(self, 'dynamic_menu_option_' + str(selected_item))
+                        args = ()
+                        method(*args, **kwargs)
                     print(f"{COLOR['darkgreen']}{'-' * 5 * len(menu_items)}{COLOR_OFF}")
                     return self.loop_dmenu(menu_items, item)
-        except Exception as e:
+        # except Exception as e:
+        else:
             print(f"Error - try again:{str(e)}")
-            return self.loop_dmenu(menu_items, item)
+        return self.loop_dmenu(menu_items, item)  # -TAB!!!
 
     def show_dmenu(self, menu_items, item=0):
         """
